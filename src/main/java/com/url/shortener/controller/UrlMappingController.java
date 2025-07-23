@@ -27,7 +27,7 @@ public class UrlMappingController {
 //    https://abc.com/QN7XOa0a --> https://example.com
 
     @PostMapping("/shorten")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UrlMappingDTO> createShortUrl(@RequestBody Map<String, String> request,
                                                         Principal principal){
         String originalUrl = request.get("originalUrl");
@@ -37,7 +37,7 @@ public class UrlMappingController {
     }
 
     @GetMapping("/myurls")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<UrlMappingDTO>> getUserUrls(Principal principal){
         User user = userService.findByUsername(principal.getName());
         List<UrlMappingDTO> urls = urlMappingService.getUrlsByUser(user);
